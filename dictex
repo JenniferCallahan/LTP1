@@ -1,0 +1,29 @@
+>>> def read_grades(gradefile):
+	#skip header
+	line = gradefile.readline()
+	while line != '\n':
+		line = gradefile.readline()
+	# read grades, accumulating them into a dict
+	grade_to_ids = {}
+	line = gradefile.readline()
+	while line != ' ': # i.e., until the end is reached
+		student_id = line[:4] # line characters 0-3
+		grade = float(line[4:].strip())
+		# remaining line stripped of whitespace, using float to change
+		# a string containing a numeric value into a usable number
+
+		#now these values need to be added to the dictionary
+
+		# case 1: grade is not yet a key in the dictionary
+		if grade not in grade_to_ids:
+			grade_to_ids[grade] = [student_id]
+			# student_id needs to be a list that can be added to
+			# later if need be
+		#case 2: grade is already a key in the dictionary
+		else:
+			grade_to_ids[grade].append(student_id)
+		line = gradefile.readline()
+		#move on to read the next line of the file
+		# once all the lines of the file have been read, this while
+		# loop will no longer execute
+		return grade_to_ids
